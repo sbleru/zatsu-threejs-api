@@ -1,0 +1,6 @@
+{
+  "enableAllProjectMcpServers": false,
+  "permissions": {
+    "allow": ["Bash(git --no-pager diff --staged)"]
+  }
+}
