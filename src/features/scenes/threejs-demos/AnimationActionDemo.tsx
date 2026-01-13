@@ -43,8 +43,10 @@ interface AnimationActionContextType {
   handleReset: () => void;
   handleFadeIn: () => void;
   handleFadeOut: () => void;
+  handleStopFading: () => void;
   handleCrossFade: () => void;
   handleWarp: () => void;
+  handleStopWarping: () => void;
   handleHalt: () => void;
   handleSyncWith: () => void;
   currentAction: THREE.AnimationAction | null;
@@ -185,6 +187,12 @@ export const AnimationActionProvider = ({
     }
   };
 
+  const handleStopFading = () => {
+    if (currentAction) {
+      currentAction.stopFading();
+    }
+  };
+
   const handleCrossFade = () => {
     if (actionRefs.current.length > 1 && currentAction) {
       const nextIndex = (currentActionIndex + 1) % actionRefs.current.length;
@@ -201,6 +209,12 @@ export const AnimationActionProvider = ({
   const handleWarp = () => {
     if (currentAction) {
       currentAction.warp(warpStartScale, warpEndScale, warpDuration);
+    }
+  };
+
+  const handleStopWarping = () => {
+    if (currentAction) {
+      currentAction.stopWarping();
     }
   };
 
@@ -252,8 +266,10 @@ export const AnimationActionProvider = ({
     handleReset,
     handleFadeIn,
     handleFadeOut,
+    handleStopFading,
     handleCrossFade,
     handleWarp,
+    handleStopWarping,
     handleHalt,
     handleSyncWith,
     currentAction,
@@ -373,8 +389,10 @@ export const AnimationActionControls = () => {
     handleReset,
     handleFadeIn,
     handleFadeOut,
+    handleStopFading,
     handleCrossFade,
     handleWarp,
+    handleStopWarping,
     handleHalt,
     handleSyncWith,
     currentAction,
@@ -482,6 +500,9 @@ export const AnimationActionControls = () => {
           </button>
           <button onClick={handleFadeOut} style={{ padding: "5px 10px" }}>
             fadeOut()
+          </button>
+          <button onClick={handleStopFading} style={{ padding: "5px 10px" }}>
+            stopFading()
           </button>
           <button onClick={handleCrossFade} style={{ padding: "5px 10px" }}>
             crossFadeTo()
@@ -614,6 +635,9 @@ export const AnimationActionControls = () => {
         <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
           <button onClick={handleWarp} style={{ padding: "5px 10px" }}>
             warp()
+          </button>
+          <button onClick={handleStopWarping} style={{ padding: "5px 10px" }}>
+            stopWarping()
           </button>
           <button onClick={handleHalt} style={{ padding: "5px 10px" }}>
             halt()
